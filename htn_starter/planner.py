@@ -1,4 +1,4 @@
-"""STUDENT TODO: recursive HTN planning with backtracking.
+"""TODO: recursive HTN planning with backtracking.
 
 plan(state, tasks, trace) returns primitive action names, or None on failure.
 [] is a successful empty plan, so never use `if not result` to detect failure.
@@ -17,6 +17,6 @@ from .trace import Trace
 
 def plan(state: State, tasks: list[str], trace: Trace) -> list[str] | None:
     raise NotImplementedError(
-        "Student TODO: implement methods in htn_starter/domain.py and "
+        "TODO: implement methods in htn_starter/domain.py and "
         "recursive planning/backtracking in htn_starter/planner.py"
     )

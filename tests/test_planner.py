@@ -1,10 +1,10 @@
-"""STUDENT TODO: remove skips as you implement these acceptance tests.
-Passing simulator tests is NOT evidence that HTN planning works.
+"""TODO: remove skips as you implement these acceptance tests.
+Passing simulator tests does not verify HTN planning.
 """
 import unittest
 
 
-class StudentPlannerTests(unittest.TestCase):
+class PlannerTests(unittest.TestCase):
     @unittest.skip('TODO: implement planner and test all seven public scenarios')
     def test_public_scenarios(self):
         self.fail('Call plan; compare None explicitly; replay successes with validate_plan')

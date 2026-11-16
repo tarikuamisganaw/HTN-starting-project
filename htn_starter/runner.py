@@ -1,4 +1,4 @@
-"""CLI for the unfinished student planner and independent plan validation."""
+"""CLI for the unfinished HTN planner and independent plan validation."""
 import argparse
 from pathlib import Path
 from .planner import plan
@@ -26,7 +26,7 @@ def main() -> int:
         result = plan(scenario.state, ["retrieve_supplies"], trace)
     except NotImplementedError as exc:
         print(f"\nUNFINISHED — {exc}")
-        print("Simulator is ready. Passing simulator tests does not complete the assignment.")
+        print("Simulator is ready. Passing simulator tests does not verify the unfinished planner.")
         return 2
     finally:
         print(f"\nPlanning trace:\n{trace.render()}")

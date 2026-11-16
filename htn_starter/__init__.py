@@ -1,1 +1,1 @@
-"""Standard-library HTN internship starter (Python 3.10+)."""
+"""Standard-library HTN planning starter (Python 3.10+)."""

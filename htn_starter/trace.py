@@ -1,4 +1,4 @@
-"""Small trace API; the student decides when to emit each event."""
+"""Small trace API; the planner controls when each event is emitted."""
 from dataclasses import dataclass, field
 
 EVENTS = {"expand", "method", "condition_failed", "backtrack", "plan"}

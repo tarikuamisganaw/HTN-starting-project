@@ -1,4 +1,4 @@
-"""STUDENT TODO: design compound tasks and ordered alternative methods.
+"""TODO: design compound tasks and ordered alternative methods.
 
 A task is a string: either an ACTIONS name or a METHODS key.
 A method takes a simulated State and returns a list of subtasks if applicable,
