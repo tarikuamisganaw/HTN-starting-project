@@ -1,0 +1,14 @@
+{
+  "name": "02_bridge_repair",
+  "expected_solvable": true,
+  "state": {
+    "location": "camp",
+    "wood": 2,
+    "rope": 1,
+    "store_wood": 0,
+    "store_rope": 0,
+    "bridge_usable": false,
+    "raft_location": null,
+    "supplies_collected": false
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "03_new_raft",
+  "expected_solvable": true,
+  "state": {
+    "location": "camp",
+    "wood": 1,
+    "rope": 2,
+    "store_wood": 0,
+    "store_rope": 0,
+    "bridge_usable": false,
+    "raft_location": null,
+    "supplies_collected": false
+  }
+}

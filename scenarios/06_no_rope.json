@@ -1,0 +1,14 @@
+{
+  "name": "06_no_rope",
+  "expected_solvable": false,
+  "state": {
+    "location": "camp",
+    "wood": 0,
+    "rope": 0,
+    "store_wood": 0,
+    "store_rope": 0,
+    "bridge_usable": true,
+    "raft_location": null,
+    "supplies_collected": false
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "04_insufficient_rope",
+  "expected_solvable": false,
+  "state": {
+    "location": "camp",
+    "wood": 1,
+    "rope": 1,
+    "store_wood": 0,
+    "store_rope": 0,
+    "bridge_usable": false,
+    "raft_location": null,
+    "supplies_collected": false
+  }
+}
