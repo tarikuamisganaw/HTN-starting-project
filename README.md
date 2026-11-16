@@ -1,8 +1,8 @@
-# Island supplies: a three-day HTN assignment
+# Island supplies: an HTN planning starter project
 
 Python 3.10+ and the standard library only. Run commands from this project directory. No installation, external services, or graphics are needed.
 
-The simulator is complete. **The HTN assignment is deliberately unfinished.** You will implement compound tasks, alternative methods, recursive decomposition, preconditions and effects during planning, backtracking, and a decision trace.
+The simulator is complete. **The HTN planner is deliberately unfinished.** Remaining functionality includes compound tasks, alternative methods, recursive decomposition, preconditions and effects during planning, backtracking, and a decision trace.
 
 ## Run the starter
 
@@ -15,7 +15,7 @@ python3 -m htn_starter.runner scenarios/03_new_raft.json
 python3 -m htn_starter.runner --help
 ```
 
-The demo manually executes a short action sequence and stops before completing the mission. It is not a planner. Tests should pass for the simulator and report five skipped student tests. Both planner commands intentionally print `UNFINISHED` and exit with code **2** until you implement the TODOs. This is expected, not a completed assignment. Once implemented, the runner exits 0 for a validated success or an expected failure, and 1 for invalid input, an invalid plan, or a result that disagrees with the scenario expectation.
+The demo manually executes a short action sequence and stops before completing the mission. It is not a planner. Tests should pass for the simulator and report five skipped planner tests. Both planner commands intentionally print `UNFINISHED` and exit with code **2** until the TODOs are implemented. This is the expected starter behavior. Once implemented, the runner exits 0 for a validated success or an expected failure, and 1 for invalid input, an invalid plan, or a result that disagrees with the scenario expectation.
 
 ## Already implemented
 
@@ -24,7 +24,7 @@ The demo manually executes a short action sequence and stops before completing t
 - `scenarios.py` and `scenarios/`: strict JSON loader and seven public cases.
 - `trace.py`: trace storage and formatting.
 - `validation.py`: independent replay and final-goal checking.
-- `demo.py`, `runner.py`, and `tests/test_simulator.py`: manual simulation, student runner, and simulator tests.
+- `demo.py`, `runner.py`, and `tests/test_simulator.py`: manual simulation, planner runner, and simulator tests.
 
 ## Complete world rules
 
@@ -45,19 +45,19 @@ State fields are `location`, inventory counts `wood` and `rope`, camp-store coun
 
 Every action checks all its preconditions before applying effects, returns a new `State` on success, and raises `ActionError` with a reason on failure. Input states never change, including after a failure. You may call `apply_action(state, name)` or a registry function. Unknown action names also raise `ActionError`. Invalid state construction raises `ValueError`.
 
-## Student work and interfaces
+## Remaining implementation and interfaces
 
-1. **`htn_starter/domain.py`**: define your task hierarchy and methods. A task is a string. Primitive names are in `ACTIONS`; compound names are keys in `METHODS`. Each method accepts a simulated state and returns a list of subtasks or `None` if not applicable. An empty list is an applicable method that needs no work. Register alternative methods in preference order. Methods describe decomposition; the planner simulates primitive effects.
+1. **`htn_starter/domain.py`**: define the task hierarchy and methods. A task is a string. Primitive names are in `ACTIONS`; compound names are keys in `METHODS`. Each method accepts a simulated state and returns a list of subtasks or `None` if not applicable. An empty list is an applicable method that needs no work. Register alternative methods in preference order. Methods describe decomposition; the planner simulates primitive effects.
 2. **`htn_starter/planner.py`**: implement `plan(state, tasks, trace) -> list[str] | None`. Return only primitive action names on success; return `None` on failure. `[]` is a successful empty plan. Use `result is None`, not truthiness, to detect failure. Do not mutate the input task list or starting state. Leave final execution to the runner's validator.
-3. **`tests/test_student_planner.py`**: replace skipped placeholders with real assertions and remove skips. Add tests for alternative methods, later-task failure, empty tasks, unknown tasks, state preservation, and your cycle/depth policy. Validate successful plans by replaying them. Do not equate a successful empty task list with achieving a mission goal.
+3. **Planner acceptance tests in `tests/`**: replace skipped placeholders with real assertions and remove skips. Add tests for alternative methods, later-task failure, empty tasks, unknown tasks, state preservation, and the chosen cycle/depth policy. Validate successful plans by replaying them. Do not equate a successful empty task list with achieving a mission goal.
 
-Suggested compound tasks are `retrieve_supplies`, `reach_island`, `prepare_resources`, and `return_to_camp`. The main task should eventually reach the island, collect supplies, and return to camp. Design the strategies yourself using the rules above; no completed methods or search implementation are provided.
+Suggested compound tasks are `retrieve_supplies`, `reach_island`, `prepare_resources`, and `return_to_camp`. The main task should eventually reach the island, collect supplies, and return to camp. Strategies should follow the rules above; no completed methods or search implementation are provided.
 
 Use `trace.record(event, detail, depth=0)` for `expand`, `method`, `condition_failed`, `backtrack`, and `plan`. Include task names, method names, failed reasons, and the final plan or failure. For example, `trace.record("expand", "retrieve_supplies", depth=0)`. The runner prints `trace.render()`. Explain both local failures and decisions revisited because a later task failed.
 
 ### Required backtracking demonstration
 
-Use scenario 02: camp, broken bridge, no raft, two wood and one rope in inventory, empty store, no supplies collected. **Try the new-raft strategy before bridge repair.** Building a raft is initially legal but consumes the only rope. Collection then fails. Your planner must revisit the earlier choice during planning and discover bridge repair, which preserves rope. Backtracking only when the method's initial conditions fail is insufficient. The failed branch must not consume resources in other branches or in the real starting state.
+Use scenario 02: camp, broken bridge, no raft, two wood and one rope in inventory, empty store, no supplies collected. **Try the new-raft strategy before bridge repair.** Building a raft is initially legal but consumes the only rope. Collection then fails. The planner must revisit the earlier choice during planning and discover bridge repair, which preserves rope. Backtracking only when the method's initial conditions fail is insufficient. The failed branch must not consume resources in other branches or in the real starting state.
 
 ### Public scenarios
 
@@ -75,16 +75,16 @@ All begin at camp without collected supplies. The store is empty and no raft exi
 
 To add a scenario, copy a JSON file, choose a descriptive filename and `name`, set `expected_solvable`, and edit all nine state fields. Keep exactly the three top-level keys shown in existing files. Run the runner with the new file path as its argument. The expected flag is evaluation metadata, never planner input. If you add files, update the simulator test that checks the seven-case public inventory, or keep custom cases in a separate directory.
 
-## Three-day schedule and submission
+## Three-day implementation schedule
 
 - **Day 1:** run the demo and tests; learn the rules; draw the task hierarchy; define methods and their order.
 - **Day 2:** implement recursive planning and backtracking; trace the rope trap; verify simulated states stay independent.
 - **Day 3:** test all scenarios; implement the greedy comparison and small extension; prepare the demonstration.
 
-After HTN works, implement a greedy version using the **same method order** that never revisits an earlier method choice. This implementation is your work. Compare outcomes and traces, especially scenario 02. Explain why local feasibility does not guarantee mission success; do not silently change strategy order to improve the greedy result.
+After HTN works, implement a greedy version using the **same method order** that never revisits an earlier method choice. The greedy implementation is also left unfinished. Compare outcomes and traces, especially scenario 02. Explain why local feasibility does not guarantee mission success; do not silently change strategy order to improve the greedy result.
 
-Add a second mission, **`repair_bridge_and_return`**, using the existing actions and planner. Its goal is a usable bridge and a character at camp; collecting supplies is not required. Add or reuse domain methods, create tests, and pass a goal predicate to `validate_plan(start, plan, goal=...)`. Expose the mission in your runner if desired. Do not change the planning algorithm to support the mission. Consider an already usable bridge, available store materials, and insufficient wood.
+Add a second mission, **`repair_bridge_and_return`**, using the existing actions and planner. Its goal is a usable bridge and a character at camp; collecting supplies is not required. Add or reuse domain methods, create tests, and pass a goal predicate to `validate_plan(start, plan, goal=...)`. The runner can also expose the new mission. Do not change the planning algorithm to support the mission. Consider an already usable bridge, available store materials, and insufficient wood.
 
-Submit your task hierarchy and methods, completed planner, planning traces (including backtracking and failure), test results, greedy comparison, second mission, and a five-minute explanation. Explain the difference between planning and execution, `[]` and `None`, and how your planner recovers from a later failure.
+Completion deliverables include the task hierarchy and methods, completed planner, planning traces (including backtracking and failure), test results, greedy comparison, second mission, and a five-minute explanation covering planning versus execution, `[]` versus `None`, and recovery from a later failure.
 
-Grading: **60%** correctness on common scenarios, **25%** understanding and explanation, **15%** a small live modification. Be ready to adjust a method, resource condition, or mission and explain the effect.
+Evaluation criteria: **60%** correctness on common scenarios, **25%** understanding and explanation, **15%** a small live modification. A live modification can adjust a method, resource condition, or mission, with an explanation of the effect.
